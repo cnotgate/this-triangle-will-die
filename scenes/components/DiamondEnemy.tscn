@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://bstybfhtbiflv"]
+
+[ext_resource type="Script" uid="uid://5doa0mlgdre6" path="res://scripts/diamond_enemy.gd" id="1_w1eg4"]
+
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_bgxf1"]
+points = PackedVector2Array(0, -20, 20, 0, 0, 20, -20, 0)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0ka5i"]
+radius = 60.0
+
+[node name="DiamondEnemy" type="CharacterBody2D" unique_id=2138759056]
+collision_layer = 2
+script = ExtResource("1_w1eg4")
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=2088167028]
+color = Color(0.8198382, 0, 0, 1)
+polygon = PackedVector2Array(0, -20, 20, 0, 0, 20, -20, 0)
+uv = PackedVector2Array(-48.399994, -58.799995, -124.399994, 31.599998, -53.807373, 112.16835, 10.613037, 30.998634)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=90821374]
+shape = SubResource("ConvexPolygonShape2D_bgxf1")
+
+[node name="HurtBox" type="Area2D" parent="." unique_id=582398]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=2110539730]
+shape = SubResource("ConvexPolygonShape2D_bgxf1")
+
+[node name="SwordArea" type="Area2D" parent="." unique_id=162333435]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SwordArea" unique_id=1953207996]
+shape = SubResource("CircleShape2D_0ka5i")
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=239241677]
+offset_left = -23.0
+offset_top = -41.0
+offset_right = 27.0
+offset_bottom = -31.0
+max_value = 30.0
+show_percentage = false
+
+[connection signal="body_entered" from="SwordArea" to="." method="_on_sword_area_body_entered"]

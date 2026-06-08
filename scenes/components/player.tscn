@@ -120,7 +120,7 @@ color = Color(0.89, 0.6497, 0.35599998, 1)
 color_ramp = SubResource("GradientTexture1D_acvb7")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_acvb7"]
-size = Vector2(96.88507, 900.17426)
+size = Vector2(96.88507, 901.6686)
 
 [sub_resource type="LabelSettings" id="LabelSettings_sjsxr"]
 font_size = 60
@@ -169,7 +169,7 @@ scale = Vector2(0.99999994, 0.99999994)
 texture = ExtResource("3_sjsxr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/SwordArea" unique_id=732990381]
-position = Vector2(3.3003235, -538.9131)
+position = Vector2(3.3002625, -538.1661)
 scale = Vector2(0.9999995, 0.9999995)
 shape = SubResource("RectangleShape2D_acvb7")
 

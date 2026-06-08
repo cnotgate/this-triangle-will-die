@@ -6,7 +6,8 @@ extends CharacterBody2D
 @onready var animation_player = $AnimationPlayer
 @onready var sword_area = $Pivot/SwordArea
 @onready var pivot = $Pivot
-# Node Partikel yang baru lu bikin
+@onready var sword_col = $Pivot/SwordArea/CollisionShape2D
+
 @onready var parry_particles = $Pivot/ParryParticles 
 # Variabel UI
 @onready var hp_bar = $UI/HealthBar
@@ -79,6 +80,7 @@ var max_hp = 100
 			update_face()
 
 func _ready():
+	sword_col.disabled = true
 	$"../PintuGerbang/AnimationPlayer".play("tutup")
 	spawn_point = global_position # Inget posisi awal pas start
 	
@@ -204,6 +206,7 @@ func start_attack():
 	in_combat = true
 	current_state = State.ATTACK
 	sword_area.show()
+	sword_col.disabled = false
 	animation_player.play("attack")
 
 func start_parry():
@@ -274,7 +277,7 @@ func die():
 	velocity = Vector2.ZERO
 	death_ui.show()
 	
-	# Kasih jeda biar player bisa merenungi nasibnya
+	# Kasih jeda
 	await get_tree().create_timer(3.0).timeout 
 	
 	# Reload total satu level
@@ -308,6 +311,7 @@ func _on_animation_player_animation_finished(anim_name):
 	if anim_name == "attack":
 		current_state = State.NORMAL
 		sword_area.hide()
+		sword_col.disabled = true
 
 func trigger_hitstop():
 	Engine.time_scale = 0.05
@@ -315,7 +319,7 @@ func trigger_hitstop():
 	Engine.time_scale = 1.0
 	
 func _on_sword_area_area_entered(area):
-	if area.name == "HurtBox" and area.get_parent().is_in_group("gatekeeper") and current_state == State.ATTACK:
+	if area.name == "HurtBox" and area.get_parent().has_method("take_damage") and current_state == State.ATTACK:
 		area.get_parent().take_damage(10)
 		trigger_hitstop()
 		
@@ -398,3 +402,9 @@ func _on_sword_area_body_entered(body):
 	if body.has_method("take_damage") and body.name=="Boss" and current_state == State.ATTACK:
 		body.take_damage(5)
 		trigger_hitstop()
+
+func _on_kill_area_body_entered(body):
+	print("sadfkjalsdfkjfds")
+	if body.name == "Player":
+		print("Player kena kill area, mati!")
+		die()

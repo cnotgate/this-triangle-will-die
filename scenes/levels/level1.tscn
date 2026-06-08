@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bj8sq0tk54amg" path="res://scenes/components/player.tscn" id="1_x6ivy"]
 [ext_resource type="PackedScene" uid="uid://by8p0nb7jksho" path="res://scenes/components/rectangle_enemy.tscn" id="2_4tcl0"]
 [ext_resource type="Shader" uid="uid://b5xsn0d2nphhs" path="res://scenes/levels/level1.gdshader" id="3_dd0lh"]
+[ext_resource type="PackedScene" uid="uid://bstybfhtbiflv" path="res://scenes/components/DiamondEnemy.tscn" id="5_dywbp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dywbp"]
 shader = ExtResource("1_bfxgj")
@@ -12,7 +13,7 @@ shader_parameter/grain_color = Color(0.25, 0.25, 0.25, 1)
 shader_parameter/grain_size = 120.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4tcl0"]
-size = Vector2(40, 40)
+size = Vector2(60.28587, 40)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4tcl0"]
 bg_color = Color(1, 0.29803923, 0, 1)
@@ -88,6 +89,9 @@ _data = {
 [sub_resource type="LabelSettings" id="LabelSettings_bfxgj"]
 font_color = Color(0, 0, 0, 1)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2r1tl"]
+size = Vector2(34247, 1643)
+
 [node name="level1" type="Node2D" unique_id=1783993572 groups=["gatekeeper"]]
 
 [node name="platform" type="StaticBody2D" parent="." unique_id=40416060]
@@ -96,16 +100,18 @@ scale = Vector2(227.84334, 33.845737)
 
 [node name="ColorRect" type="ColorRect" parent="platform" unique_id=1645723909]
 material = SubResource("ShaderMaterial_dywbp")
-offset_right = 40.0
+offset_left = -20.272701
+offset_right = 129.7273
 offset_bottom = 40.0
 metadata/_edit_use_anchors_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="platform" unique_id=40650482]
-position = Vector2(20, 20)
+position = Vector2(10.151711, 19.999994)
+scale = Vector2(1, 0.9999998)
 shape = SubResource("RectangleShape2D_4tcl0")
 
 [node name="Player" parent="." unique_id=917927805 groups=["gatekeeper"] instance=ExtResource("1_x6ivy")]
-position = Vector2(93, -74)
+position = Vector2(-5088, -74)
 scale = Vector2(0.1468848, 0.1468848)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=187460605]
@@ -183,10 +189,10 @@ libraries/ = SubResource("AnimationLibrary_plydf")
 position = Vector2(3219, -162)
 
 [node name="Label" type="Label" parent="." unique_id=911543037]
-offset_left = 26.0
-offset_top = -341.0
-offset_right = 174.0
-offset_bottom = -214.0
+offset_left = -5317.0
+offset_top = -326.0
+offset_right = -5169.0
+offset_bottom = -199.0
 text = "CONTROLS:
 Move: WASD
 Attack: LMB
@@ -204,4 +210,18 @@ text = "Parry (just before attack) negates damage and stuns enemy
 Blocking (if late for parry) only negates 80% of the damage"
 label_settings = SubResource("LabelSettings_bfxgj")
 
+[node name="DiamondEnemy" parent="." unique_id=2138759056 instance=ExtResource("5_dywbp")]
+position = Vector2(-3561, -80.00001)
+scale = Vector2(3.7600012, 3.7600012)
+collision_layer = 2
+
+[node name="KillArea" type="Area2D" parent="." unique_id=1692386851]
+position = Vector2(-2851, 2557)
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillArea" unique_id=1161466321]
+position = Vector2(6507, -286)
+shape = SubResource("RectangleShape2D_2r1tl")
+
 [connection signal="body_entered" from="GateCloser" to="Player" method="_on_gate_closer_body_entered"]
+[connection signal="body_entered" from="KillArea" to="Player" method="_on_kill_area_body_entered"]
