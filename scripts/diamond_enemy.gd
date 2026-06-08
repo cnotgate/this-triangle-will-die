@@ -127,7 +127,7 @@ func get_parried():
 	velocity.x = knockback_dir * 250
 	velocity.y = -100
 	
-	# Stunned 2.5 detik biar gampang digebuk player
+	# Stunned 2.5 detik pas kena parry
 	await get_tree().create_timer(2.5).timeout
 	
 	if is_instance_valid(self):
