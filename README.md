@@ -1,3 +1,4 @@
+Bukti last modified: https://github.com/cnotgate/this-triangle-will-die/blob/main/bukti-date-modified-file.png
 THIS TRIANGLE WILL DIE
 
 Survive the unknown. Fight for your last breath.
