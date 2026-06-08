@@ -1,0 +1,187 @@
+[gd_scene format=3 uid="uid://diagfiewd6tqv"]
+
+[ext_resource type="Shader" uid="uid://cmp4kvo42mr4a" path="res://scenes/levels/level1_platform.gdshader" id="1_bfxgj"]
+[ext_resource type="PackedScene" uid="uid://bj8sq0tk54amg" path="res://scenes/components/player.tscn" id="1_x6ivy"]
+[ext_resource type="PackedScene" uid="uid://by8p0nb7jksho" path="res://scenes/components/rectangle_enemy.tscn" id="2_4tcl0"]
+[ext_resource type="Shader" uid="uid://b5xsn0d2nphhs" path="res://scenes/levels/level1.gdshader" id="3_dd0lh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dywbp"]
+shader = ExtResource("1_bfxgj")
+shader_parameter/base_color = Color(0.3, 0.3, 0.3, 1)
+shader_parameter/grain_color = Color(0.25, 0.25, 0.25, 1)
+shader_parameter/grain_size = 120.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4tcl0"]
+size = Vector2(40, 40)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4tcl0"]
+bg_color = Color(1, 0.29803923, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dd0lh"]
+bg_color = Color(0.7269178, 0.58269393, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bfxgj"]
+shader = ExtResource("3_dd0lh")
+shader_parameter/bg_color = Color(1, 1, 1, 1)
+shader_parameter/star_color = Color(0, 0, 0, 1)
+shader_parameter/speed = -0.02
+shader_parameter/star_density = 0.98
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bfxgj"]
+size = Vector2(86, 303)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dywbp"]
+size = Vector2(49, 444)
+
+[sub_resource type="Animation" id="Animation_1seuy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1, 275)]
+}
+
+[sub_resource type="Animation" id="Animation_2r1tl"]
+resource_name = "buka"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-1, 275), Vector2(-1, -141)]
+}
+
+[sub_resource type="Animation" id="Animation_8a7m2"]
+resource_name = "tutup"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-1, -141), Vector2(-1, 275)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_plydf"]
+_data = {
+&"RESET": SubResource("Animation_1seuy"),
+&"buka": SubResource("Animation_2r1tl"),
+&"tutup": SubResource("Animation_8a7m2")
+}
+
+[node name="level1" type="Node2D" unique_id=1783993572]
+
+[node name="platform" type="StaticBody2D" parent="." unique_id=40416060]
+position = Vector2(-1094.9999, 0)
+scale = Vector2(227.84334, 33.845737)
+
+[node name="ColorRect" type="ColorRect" parent="platform" unique_id=1645723909]
+material = SubResource("ShaderMaterial_dywbp")
+offset_right = 40.0
+offset_bottom = 40.0
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="platform" unique_id=40650482]
+position = Vector2(20, 20)
+shape = SubResource("RectangleShape2D_4tcl0")
+
+[node name="Player" parent="." unique_id=917927805 instance=ExtResource("1_x6ivy")]
+position = Vector2(93, -74)
+scale = Vector2(0.1468848, 0.1468848)
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=187460605]
+position = Vector2(-633.14923, -571.8767)
+scale = Vector2(6.8080564, 6.8080564)
+process_callback = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 7.0
+drag_horizontal_enabled = true
+drag_left_margin = 0.0
+drag_right_margin = 0.0
+
+[node name="UI" type="CanvasLayer" parent="Player" unique_id=84587184]
+
+[node name="HealthBar" type="ProgressBar" parent="Player/UI" unique_id=1273191564]
+offset_left = 8.0
+offset_top = 3.0
+offset_right = 208.0
+offset_bottom = 30.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_4tcl0")
+show_percentage = false
+
+[node name="StaminaBar" type="ProgressBar" parent="Player/UI" unique_id=312916883]
+offset_left = 8.0
+offset_top = 39.0
+offset_right = 208.0
+offset_bottom = 66.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_dd0lh")
+show_percentage = false
+
+[node name="RectangleEnemy" parent="." unique_id=696830030 groups=["gatekeeper"] instance=ExtResource("2_4tcl0")]
+position = Vector2(357, -93.00001)
+scale = Vector2(2.2393472, 2.2393472)
+collision_layer = 2
+
+[node name="Background" type="CanvasLayer" parent="." unique_id=1619673590]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="Background" unique_id=481544561]
+material = SubResource("ShaderMaterial_bfxgj")
+custom_minimum_size = Vector2(1500, 750)
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(0.7690732, 0.8680527)
+
+[node name="AtasGerbang" type="RigidBody2D" parent="." unique_id=1110045976]
+collision_layer = 2
+collision_mask = 2
+gravity_scale = 0.0
+
+[node name="AtasGerbang" type="ColorRect" parent="AtasGerbang" unique_id=1401774255]
+offset_left = 772.0
+offset_top = -722.0
+offset_right = 812.0
+offset_bottom = -682.0
+scale = Vector2(2.1600049, 7.582083)
+color = Color(0, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="AtasGerbang2" type="CollisionShape2D" parent="AtasGerbang" unique_id=633391875]
+position = Vector2(815, -570.5)
+shape = SubResource("RectangleShape2D_bfxgj")
+
+[node name="PintuGerbang" type="RigidBody2D" parent="." unique_id=1970385971]
+position = Vector2(-1, 275)
+collision_layer = 2
+gravity_scale = 0.0
+
+[node name="PintuGerbang" type="ColorRect" parent="PintuGerbang" unique_id=568649811]
+offset_left = 790.99994
+offset_top = -722.00006
+offset_right = 830.99994
+offset_bottom = -682.00006
+scale = Vector2(1.2400048, 11.102083)
+color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PintuGerbang" unique_id=422206778]
+position = Vector2(815.5, -500)
+shape = SubResource("RectangleShape2D_dywbp")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PintuGerbang" unique_id=1570645054]
+libraries/ = SubResource("AnimationLibrary_plydf")

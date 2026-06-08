@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bj8sq0tk54amg"]
+
+[ext_resource type="Script" uid="uid://dwpydexnh6wj7" path="res://scripts/player.gd" id="1_h3cwf"]
+[ext_resource type="Texture2D" uid="uid://b0r32la004dom" path="res://sprites/player/happy.png" id="2_sjsxr"]
+
+[node name="Player" type="CharacterBody2D" unique_id=917927805]
+script = ExtResource("1_h3cwf")
+
+[node name="PlayerSprite" type="Sprite2D" parent="." unique_id=476120744]
+texture = ExtResource("2_sjsxr")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1504580593]
+polygon = PackedVector2Array(0, -365, 501, 500, -501, 500)
+
+[node name="HurtTimer" type="Timer" parent="." unique_id=404839160]
+wait_time = 0.2
+
+[node name="BlinkTimer" type="Timer" parent="." unique_id=1643357064]

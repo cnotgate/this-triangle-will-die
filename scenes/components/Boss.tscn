@@ -1,0 +1,169 @@
+[gd_scene format=3 uid="uid://24r8ci1bxue0"]
+
+[ext_resource type="Script" uid="uid://vx6r2fs6hpqn" path="res://scenes/components/boss.gd" id="1_bv3gc"]
+[ext_resource type="Texture2D" uid="uid://b1bmpiggq3y4m" path="res://sprites/Untitled design (1).png" id="1_cc5ku"]
+
+[sub_resource type="Animation" id="Animation_bv3gc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/StaticBody2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pivot/StaticBody2D/WeaponArea/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_0542w"]
+resource_name = "attack_1"
+length = 2.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/StaticBody2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7, 1.1, 1.2166667, 1.4166667, 2.2, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.9291886, 0.9291886, 1.161327, -0.96537983, -0.96537983, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pivot/StaticBody2D/WeaponArea/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.26, 1.44),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_ek7nm"]
+resource_name = "attack_2"
+length = 7.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/StaticBody2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.9990053, 2.0333333, 2.5, 3.5, 4.5, 5.5, 6.5, 7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 2.6179938, 2.6179938779914944, 2.6179938779914944, -3.6651914, -9.948377, -16.231562, -22.514748, -25.132741228718345]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pivot/StaticBody2D/WeaponArea/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2.51, 7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_reknv"]
+_data = {
+&"RESET": SubResource("Animation_bv3gc"),
+&"attack_1": SubResource("Animation_0542w"),
+&"attack_2": SubResource("Animation_ek7nm")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vns8y"]
+radius = 9.438747
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nilou"]
+radius = 29.364227
+
+[node name="Boss" type="CharacterBody2D" unique_id=1633451453]
+collision_layer = 4
+collision_mask = 5
+script = ExtResource("1_bv3gc")
+
+[node name="Body" type="Sprite2D" parent="." unique_id=1515917476]
+texture = ExtResource("1_cc5ku")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=130805813]
+libraries/ = SubResource("AnimationLibrary_reknv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1056712502]
+scale = Vector2(-53.62388, -53.62388)
+shape = SubResource("CircleShape2D_vns8y")
+
+[node name="BossLayer" type="CanvasLayer" parent="." unique_id=699299691]
+
+[node name="BossHealthBar" type="ProgressBar" parent="BossLayer" unique_id=1063169622]
+offset_left = 212.0
+offset_top = 575.0
+offset_right = 912.0
+offset_bottom = 602.0
+max_value = 300.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="BossLayer" unique_id=95638289]
+offset_left = 214.0
+offset_top = 546.0
+offset_right = 335.0
+offset_bottom = 569.0
+text = "Circlo the Circle"
+
+[node name="Pivot" type="Node2D" parent="." unique_id=1293566462]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Pivot" unique_id=998252067]
+collision_layer = 0
+collision_mask = 7
+
+[node name="Sprite2D" type="Sprite2D" parent="Pivot/StaticBody2D" unique_id=1423749693]
+position = Vector2(-675.00006, -284.00003)
+scale = Vector2(0.25427288, 0.25427288)
+texture = ExtResource("1_cc5ku")
+
+[node name="WeaponArea" type="Area2D" parent="Pivot/StaticBody2D" unique_id=82880269]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/StaticBody2D/WeaponArea" unique_id=1652160955]
+position = Vector2(-675, -285)
+scale = Vector2(4.2581053, 4.2581053)
+shape = SubResource("CircleShape2D_nilou")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/StaticBody2D" unique_id=1899963325]
+position = Vector2(-675, -285.00003)
+scale = Vector2(4.2581053, 4.2581053)
+shape = SubResource("CircleShape2D_nilou")
+
+[node name="HurtBox" type="Area2D" parent="." unique_id=1563471797]
+collision_layer = 0
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=892369021]
+position = Vector2(4, 1)
+scale = Vector2(18.13146, 18.13146)
+shape = SubResource("CircleShape2D_nilou")
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="body_entered" from="Pivot/StaticBody2D/WeaponArea" to="." method="_on_weapon_area_body_entered"]

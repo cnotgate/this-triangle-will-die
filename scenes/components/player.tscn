@@ -1,0 +1,204 @@
+[gd_scene format=3 uid="uid://bj8sq0tk54amg"]
+
+[ext_resource type="Script" uid="uid://dwpydexnh6wj7" path="res://scripts/player.gd" id="1_h3cwf"]
+[ext_resource type="Texture2D" uid="uid://b0r32la004dom" path="res://sprites/player/happy.png" id="2_sjsxr"]
+[ext_resource type="Texture2D" uid="uid://t8cim0d20wdh" path="res://sprites/player/sword.png" id="3_sjsxr"]
+
+[sub_resource type="Animation" id="Animation_ps70n"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(308.00003, -8.000003)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.28322718]
+}
+
+[sub_resource type="Animation" id="Animation_v4i73"]
+resource_name = "attack"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(308.00003, -8.000003), Vector2(308.00003, -8.000003), Vector2(308.00003, -8.000003)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [-0.18896168, -0.28322718, 2.107783]
+}
+
+[sub_resource type="Animation" id="Animation_sjsxr"]
+resource_name = "parry"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.01, 0.05),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(308.00003, -8.000003), Vector2(308.00003, -8.000003), Vector2(308.00003, -8.000003)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.01, 0.05),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1.2087456, 0.92380965, 0.2596652]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ypwcc"]
+_data = {
+&"RESET": SubResource("Animation_ps70n"),
+&"attack": SubResource("Animation_v4i73"),
+&"parry": SubResource("Animation_sjsxr")
+}
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_sjsxr"]
+
+[sub_resource type="Gradient" id="Gradient_sjsxr"]
+offsets = PackedFloat32Array(0.4567669, 1)
+colors = PackedColorArray(0.92004114, 0.5186032, 0.16101897, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_acvb7"]
+gradient = SubResource("Gradient_sjsxr")
+
+[sub_resource type="Curve" id="Curve_ps70n"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.9632107, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_v4i73"]
+curve = SubResource("Curve_ps70n")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ypwcc"]
+spread = 159.018
+initial_velocity_min = 150.0
+initial_velocity_max = 200.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_v4i73")
+color = Color(0.89, 0.6497, 0.35599998, 1)
+color_ramp = SubResource("GradientTexture1D_acvb7")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_acvb7"]
+size = Vector2(96.88507, 900.17426)
+
+[sub_resource type="LabelSettings" id="LabelSettings_sjsxr"]
+font_size = 60
+font_color = Color(1, 0, 0, 1)
+
+[node name="Player" type="CharacterBody2D" unique_id=917927805 groups=["player"]]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_h3cwf")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1504580593]
+polygon = PackedVector2Array(0, -365, 501, 500, -501, 500)
+
+[node name="HurtTimer" type="Timer" parent="." unique_id=404839160]
+
+[node name="BlinkTimer" type="Timer" parent="." unique_id=1643357064]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=562274099]
+root_node = NodePath("../Pivot/SwordArea")
+libraries/ = SubResource("AnimationLibrary_ypwcc")
+
+[node name="Pivot" type="Node2D" parent="." unique_id=1009253564]
+
+[node name="ParryParticles" type="GPUParticles2D" parent="Pivot" unique_id=1638589688]
+z_index = 100
+emitting = false
+amount = 50
+texture = SubResource("PlaceholderTexture2D_sjsxr")
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_ypwcc")
+
+[node name="PlayerSprite" type="Sprite2D" parent="Pivot" unique_id=476120744]
+texture = ExtResource("2_sjsxr")
+
+[node name="SwordArea" type="Area2D" parent="Pivot" unique_id=1912250114]
+position = Vector2(308.00003, -8.000003)
+rotation = -0.28322718
+scale = Vector2(1.013, 0.99999994)
+collision_layer = 7
+collision_mask = 7
+
+[node name="SwordSprite" type="Sprite2D" parent="Pivot/SwordArea" unique_id=731943639]
+position = Vector2(-21.084167, -498.82928)
+scale = Vector2(0.99999994, 0.99999994)
+texture = ExtResource("3_sjsxr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/SwordArea" unique_id=732990381]
+position = Vector2(3.3003235, -538.9131)
+scale = Vector2(0.9999995, 0.9999995)
+shape = SubResource("RectangleShape2D_acvb7")
+
+[node name="DeathUI" type="CanvasLayer" parent="." unique_id=1564294295]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="DeathUI" unique_id=287493370]
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(28.880003, 16.320004)
+color = Color(0, 0, 0, 0.77254903)
+
+[node name="Label" type="Label" parent="DeathUI" unique_id=436618774]
+offset_left = 233.0
+offset_top = 293.0
+offset_right = 938.0
+offset_bottom = 376.0
+text = "GW BILANG JUGA APA :D"
+label_settings = SubResource("LabelSettings_sjsxr")
+
+[node name="EnemyOverlapCheck" type="Area2D" parent="." unique_id=1624024010]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="EnemyOverlapCheck" unique_id=1954724977]
+polygon = PackedVector2Array(0, -365, 501, 500, -501, 500)
+
+[connection signal="timeout" from="HurtTimer" to="." method="_on_hurt_timer_timeout"]
+[connection signal="timeout" from="BlinkTimer" to="." method="_on_blink_timer_timeout"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="area_entered" from="Pivot/SwordArea" to="." method="_on_sword_area_area_entered"]
+[connection signal="body_entered" from="Pivot/SwordArea" to="." method="_on_sword_area_body_entered"]

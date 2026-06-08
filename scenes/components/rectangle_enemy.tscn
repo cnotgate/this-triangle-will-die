@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://by8p0nb7jksho"]
+
+[ext_resource type="Script" uid="uid://bfu3sbhrg8now" path="res://scripts/rectangle_enemy.gd" id="1_hrvvp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v1ql1"]
+size = Vector2(40, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hrvvp"]
+size = Vector2(40, 40.02095)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hrvvp"]
+radius = 37.0
+height = 80.0
+
+[node name="RectangleEnemy" type="CharacterBody2D" unique_id=696830030]
+script = ExtResource("1_hrvvp")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1476550928]
+light_mask = 3
+visibility_layer = 4
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.19535613, 0.67008495, 1, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=133363526]
+position = Vector2(20, 20)
+shape = SubResource("RectangleShape2D_v1ql1")
+
+[node name="HurtBox" type="Area2D" parent="." unique_id=1712753514]
+position = Vector2(0, -4.7683716e-07)
+scale = Vector2(0.99749684, 0.99947643)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=1154600201]
+position = Vector2(20.05019, 20.010475)
+scale = Vector2(1, 0.99999994)
+shape = SubResource("RectangleShape2D_hrvvp")
+
+[node name="SwordArea" type="Area2D" parent="." unique_id=727394531]
+position = Vector2(20, 18)
+scale = Vector2(1.5556892, 1.5556892)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SwordArea" unique_id=1891162536]
+shape = SubResource("CapsuleShape2D_hrvvp")
+disabled = true
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1255827718]
+offset_left = -4.0
+offset_top = -30.0
+offset_right = 46.0
+offset_bottom = -20.0
+max_value = 50.0
+show_percentage = false
+
+[connection signal="body_entered" from="SwordArea" to="." method="_on_attack_area_body_entered"]
+[connection signal="body_entered" from="SwordArea" to="." method="_on_sword_area_body_entered"]
